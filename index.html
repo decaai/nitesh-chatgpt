@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPT Sci-Fi - Nitesh's AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f14; --panel:#071224; --muted:#7aa6b8; --accent:#10b981;
+  --bubble-in:#0b1226; --bubble-out:#0b8a64; --glass: rgba(255,255,255,0.03);
+  --neon:#06b6d4; --neon-hover:#10b981;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,Orbitron,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,Arial;background:linear-gradient(180deg,#0b0f14,#06121a);color:#e6eef6;overflow:hidden}
+.app{width:1100px;height:86vh;margin:24px auto;border-radius:12px;overflow:hidden;display:flex;box-shadow:0 0 40px rgba(2,6,23,0.9)}
+.sidebar{width:320px;background:linear-gradient(180deg,#071024,#04101a);border-right:1px solid rgba(255,255,255,0.05);display:flex;flex-direction:column}
+.sb-top{display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid rgba(255,255,255,0.02)}
+.logo{width:48px;height:48px;border-radius:50%;background:linear-gradient(45deg,#06b6d4,#10b981);display:flex;align-items:center;justify-content:center;font-weight:700;color:#02120c;font-family:Orbitron;font-size:20px;text-shadow:0 0 10px #06b6d4,0 0 20px #06b6d4,0 0 30px #10b981,0 0 40px #10b981;animation:neonPulse 2s infinite alternate}
+@keyframes neonPulse{0%{box-shadow:0 0 10px #06b6d4,0 0 20px #06b6d4}50%{box-shadow:0 0 15px #10b981,0 0 25px #10b981}100%{box-shadow:0 0 10px #06b6d4,0 0 20px #06b6d4}}
+.sb-title{font-weight:700;color:#06b6d4;font-family:Orbitron}
+.sb-actions{margin-left:auto;display:flex;gap:8px}
+.icon-btn{background:transparent;border:1px solid rgba(255,255,255,0.03);padding:8px;border-radius:8px;color:var(--muted);cursor:pointer;transition:0.2s}
+.icon-btn:hover{background:rgba(255,255,255,0.02);color:var(--neon-hover)}
+.new-chat-btn{margin:12px;padding:10px;border-radius:10px;background:linear-gradient(90deg,#06202b,#08303b);border:1px solid rgba(255,255,255,0.03);cursor:pointer;color:#bcebd6;transition:0.2s}
+.new-chat-btn:hover{background:linear-gradient(90deg,#08303b,#0a2c3c)}
+.search{padding:10px;border-bottom:1px solid rgba(255,255,255,0.02)}
+.search input{width:100%;padding:10px;border-radius:8px;border:none;background:rgba(255,255,255,0.02);color:var(--muted);outline:none}
+.chats{flex:1;overflow:auto;padding:6px}
+.chat-item{display:flex;gap:10px;align-items:center;padding:10px;border-radius:8px;cursor:pointer;transition:0.2s}
+.chat-item:hover{background:rgba(255,255,255,0.01);box-shadow:0 0 12px var(--neon-hover)}
+.chat-avatar{width:40px;height:40px;border-radius:50%;background:#0b2740;color:#bfe7da;display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:0 0 8px #06b6d4}
+.chat-meta{flex:1}
+.chat-name{font-weight:600;color:#06b6d4}
+.chat-last{color:var(--muted);font-size:13px;margin-top:4px}
+.footer-small{padding:10px;border-top:1px solid rgba(255,255,255,0.02);font-size:12px;color:var(--muted)}
+.chat-area{flex:1;display:flex;flex-direction:column;background:linear-gradient(180deg,#08101a,#06121a)}
+.chat-top{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid rgba(255,255,255,0.02)}
+.chat-title{font-weight:700;color:#06b6d4}
+.chat-status{color:var(--muted);font-size:13px}
+.messages{flex:1;padding:20px;overflow:auto;display:flex;flex-direction:column;gap:12px;background-image: radial-gradient(rgba(255,255,255,0.01) 1px, transparent 1px); background-size: 18px 18px;}
+.msg-row{display:flex;flex-direction:column;max-width:72%}
+.bubble{padding:12px 14px;border-radius:12px;font-size:15px;line-height:1.4;box-shadow:0 0 12px rgba(2,6,23,0.7);opacity:0;transform:translateY(6px);animation:fadeIn .3s forwards;transition:0.3s}
+.bubble.in{align-self:flex-start;background:var(--bubble-in);border:1px solid rgba(255,255,255,0.02);color:#d6e8f0;border-bottom-left-radius:4px}
+.bubble.out{align-self:flex-end;background:linear-gradient(90deg,var(--bubble-out),#0b8a64);color:#e6fff4;border-bottom-right-radius:4px}
+.bubble.in:hover,.bubble.out:hover{box-shadow:0 0 15px var(--neon),0 0 25px var(--neon-hover)}
+.meta-time{display:block;font-size:12px;color:var(--muted);margin-top:8px}
+@keyframes fadeIn{to{opacity:1;transform:none}}
+.typing{display:inline-flex;align-items:center;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.02)}
+.typing span{display:inline-block;width:8px;height:8px;border-radius:50%;background:#06b6d4;margin:0 3px;opacity:.3;animation:blink .95s infinite}
+.typing span:nth-child(2){animation-delay:.16s} .typing span:nth-child(3){animation-delay:.32s}
+@keyframes blink{0%{opacity:.2}50%{opacity:1}100%{opacity:.2}}
+.chat-bottom{padding:12px;border-top:1px solid rgba(255,255,255,0.02);display:flex;gap:10px;align-items:center}
+.prompt{flex:1;background:rgba(255,255,255,0.02);padding:12px;border-radius:999px;border:1px solid rgba(255,255,255,0.02);outline:none;color:#e6eef6;min-height:44px;resize:none;transition:0.2s}
+.prompt:focus{border-color:var(--accent)}
+.send-btn{background:linear-gradient(90deg,#06b6d4,#10b981);border:none;padding:10px 14px;border-radius:10px;color:#02120c;font-weight:600;cursor:pointer;transition:0.2s}
+.send-btn:hover{background:linear-gradient(90deg,#10b981,#06b6d4)}
+.small-muted{font-size:12px;color:var(--muted)}
+@media (max-width:900px){ .app{width:100%;height:94vh;margin:12px} .sidebar{width:280px} }
+@media (max-width:680px){ .app{flex-direction:column;height:100vh} .sidebar{height:200px;width:100%} .chat-area{flex:1} }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+<div class="sidebar">
+<div class="sb-top">
+<div class="logo">AI</div>
+<div>
+<div class="sb-title">Nitesh's ChatAI</div>
+<div class="small-muted">Owner: Nitesh Kumar 🤘</div>
+</div>
+<div class="sb-actions">
+<button class="icon-btn" id="newChatBtn" title="New chat">＋</button>
+<button class="icon-btn" id="clearAllBtn" title="Clear all">🗑</button>
+</div>
+</div>
+<div class="search">
+<input id="searchChats" placeholder="Search chats...">
+</div>
+<div class="chats" id="chatsList"></div>
+<div class="footer-small">Futuristic AI frontend by Nitesh Kumar ✨</div>
+</div>
+<div class="chat-area">
+<div class="chat-top">
+<div class="chat-avatar" id="contactAvatar">AI</div>
+<div>
+<div class="chat-title" id="chatTitle">Welcome!</div>
+<div class="chat-status" id="chatStatus">Say hi to your AI assistant 😎</div>
+</div>
+</div>
+<div class="messages" id="messages"></div>
+<div class="chat-bottom">
+<textarea id="prompt" class="prompt" placeholder="Type your message... (Enter to send)"></textarea>
+<button id="sendBtn" class="send-btn">Send</button>
+</div>
+</div>
+</div>
+
+<script>
+/////////////////////// CONFIG - Groq ////////////////////////
+const GROQ_API_KEY = "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"; // <-- put your Groq key
+const MODEL = "compound-beta"; // change if needed
+///////////////////////////////////////////////////////////////////////////
+
+const uid = ()=>Math.random().toString(36).slice(2,9);
+const STORAGE = "chatgpt_groq_sci_local_v1";
+const maxHistoryMessages = 12;
+
+const chatsListEl = document.getElementById('chatsList');
+const messagesEl = document.getElementById('messages');
+const chatTitleEl = document.getElementById('chatTitle');
+const chatStatusEl = document.getElementById('chatStatus');
+const contactAvatarEl = document.getElementById('contactAvatar');
+const promptEl = document.getElementById('prompt');
+const sendBtn = document.getElementById('sendBtn');
+const newChatBtn = document.getElementById('newChatBtn');
+const clearAllBtn = document.getElementById('clearAllBtn');
+const searchChatsEl = document.getElementById('searchChats');
+
+let chats = loadChats();
+let activeChatId = chats[0]?.id || null;
+
+// Initial greeting with compliment
+if(!activeChatId){
+  startNewChat("Hello Nitesh Kumar! You are a genius! 😎🔥");
+}
+
+// ----------------- Storage -----------------
+function saveChats(){ localStorage.setItem(STORAGE, JSON.stringify(chats)) }
+function loadChats(){ return JSON.parse(localStorage.getItem(STORAGE)||"[]") }
+
+// ----------------- Chat handling -----------------
+function startNewChat(initMsg){
+  const chat = {id:uid(), messages:[]};
+  if(initMsg) chat.messages.push({role:'assistant', content:initMsg});
+  chats.unshift(chat);
+  activeChatId = chat.id;
+  saveChats(); renderChats(); renderMessages();
+}
+function renderChats(){
+  chatsListEl.innerHTML = "";
+  chats.forEach(c=>{
+    const lastMsg = c.messages[c.messages.length-1]?.content||"New Chat";
+    const el = document.createElement('div'); el.className='chat-item';
+    el.innerHTML=`<div class="chat-avatar">AI</div>
+                  <div class="chat-meta">
+                    <div class="chat-name">AI Assistant</div>
+                    <div class="chat-last">${lastMsg.slice(0,28)}</div>
+                  </div>`;
+    el.onclick=()=>{ activeChatId=c.id; renderMessages(); }
+    chatsListEl.appendChild(el);
+  })
+}
+function renderMessages(){
+  const chat = chats.find(c=>c.id===activeChatId);
+  messagesEl.innerHTML="";
+  if(!chat) return;
+  chat.messages.slice(-maxHistoryMessages).forEach(m=>{
+    const div=document.createElement('div'); div.className='msg-row';
+    const bubble=document.createElement('div'); bubble.className='bubble '+(m.role==='user'?'out':'in'); bubble.textContent=m.content;
+    div.appendChild(bubble);
+    messagesEl.appendChild(div);
+  });
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+// ----------------- Send message -----------------
+async function sendMessage(){
+  const txt = promptEl.value.trim(); if(!txt) return;
+  appendMessage('user', txt);
+  promptEl.value="";
+  showTyping(true);
+  try{
+    const reply = await getGPTReply(txt, chats.find(c=>c.id===activeChatId)?.messages||[]);
+    appendMessage('assistant', reply);
+  }catch(e){
+    appendMessage('assistant', "Oops, API error! Check your key & network.");
+    console.error(e);
+  }
+  showTyping(false);
+}
+function appendMessage(role, content){
+  const chat = chats.find(c=>c.id===activeChatId);
+  chat.messages.push({role, content});
+  saveChats(); renderMessages();
+}
+
+// ----------------- Typing animation & API -----------------
+function showTyping(on){
+  if(on){
+    const typingDiv=document.createElement('div'); typingDiv.className='msg-row';
+    const bubble=document.createElement('div'); bubble.className='bubble in typing';
+    bubble.innerHTML='<span></span><span></span><span></span>';
+    typingDiv.appendChild(bubble);
+    messagesEl.appendChild(typingDiv);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  } else {
+    const typingEl = messagesEl.querySelector('.typing');
+    if(typingEl) typingEl.parentNode.remove();
+  }
+}
+
+async function getGPTReply(userText, chatHistory){
+  if(!GROQ_API_KEY || GROQ_API_KEY.startsWith("YOUR_")) return "Put your Groq API key in the config!";
+  const messages = chatHistory.map(m=>({role:m.role, content:m.content})).concat({role:'user',content:userText});
+  const payload = { model: MODEL, messages, temperature:0.7, max_tokens:800 };
+  const resp = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method:"POST",
+    headers:{"Content-Type":"application/json","Authorization":`Bearer ${GROQ_API_KEY}`},
+    body:JSON.stringify(payload)
+  });
+  if(!resp.ok){ const txt=await resp.text(); throw new Error(txt) }
+  const data = await resp.json();
+  return data?.choices?.[0]?.message?.content?.trim() || "No response";
+}
+
+// ----------------- Events -----------------
+sendBtn.onclick=sendMessage;
+promptEl.addEventListener("keypress",e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
+newChatBtn.onclick=()=>startNewChat("Hey Nitesh! Ready for another amazing chat? 😎");
+clearAllBtn.onclick=()=>{ chats=[]; saveChats(); renderChats(); renderMessages(); }
+searchChatsEl.addEventListener("input",()=>{
+  const q=searchChatsEl.value.toLowerCase();
+  chatsListEl.querySelectorAll(".chat-item").forEach((el,i)=>{
+    el.style.display=chats[i].messages[0]?.content.toLowerCase().includes(q)?'flex':'none';
+  });
+});
+
+// Initial render
+renderChats(); renderMessages();
+</script>
+</body>
+</html>
