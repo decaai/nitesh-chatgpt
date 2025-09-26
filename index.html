@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ChatGPT Sci-Fi - Nitesh's AI</title>
+<title>Ai Chat by Wisnu Ai</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -122,7 +122,7 @@ let activeChatId = chats[0]?.id || null;
 
 // Initial greeting with compliment
 if(!activeChatId){
-  startNewChat("Hello Nitesh Kumar! You are a genius! 😎🔥");
+  startNewChat("Data user 4445-4455");
 }
 
 // ----------------- Storage -----------------
@@ -217,7 +217,7 @@ async function getGPTReply(userText, chatHistory){
 // ----------------- Events -----------------
 sendBtn.onclick=sendMessage;
 promptEl.addEventListener("keypress",e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
-newChatBtn.onclick=()=>startNewChat("Hey Nitesh! Ready for another amazing chat? 😎");
+newChatBtn.onclick=()=>startNewChat("Hello, how are you today?");
 clearAllBtn.onclick=()=>{ chats=[]; saveChats(); renderChats(); renderMessages(); }
 searchChatsEl.addEventListener("input",()=>{
   const q=searchChatsEl.value.toLowerCase();
@@ -231,5 +231,6 @@ renderChats(); renderMessages();
 </script>
 </body>
 </html>
+
 
 
