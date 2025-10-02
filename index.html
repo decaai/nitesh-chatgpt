@@ -123,7 +123,7 @@ let activeChatId = chats[0]?.id || null;
 
 // Initial greeting with compliment
 if(!activeChatId){
-  startNewChat("Hello Nitesh Kumar! You are a genius! 😎🔥");
+  startNewChat("Halo bang, mau tanya apa sama saya?");
 }
 
 // ----------------- Storage -----------------
@@ -218,7 +218,7 @@ async function getGPTReply(userText, chatHistory){
 // ----------------- Events -----------------
 sendBtn.onclick=sendMessage;
 promptEl.addEventListener("keypress",e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
-newChatBtn.onclick=()=>startNewChat("Hey Nitesh! Ready for another amazing chat? 😎");
+newChatBtn.onclick=()=>startNewChat("Heiii WisnAI di sini!!");
 clearAllBtn.onclick=()=>{ chats=[]; saveChats(); renderChats(); renderMessages(); }
 searchChatsEl.addEventListener("input",()=>{
   const q=searchChatsEl.value.toLowerCase();
@@ -232,6 +232,7 @@ renderChats(); renderMessages();
 </script>
 </body>
 </html>
+
 
 
 
