@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ai Chat by Wisnu Ai</title>
+<title>ChatGPT Sci-Fi - Nitesh's AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -67,25 +67,26 @@ html,body{height:100%;margin:0;font-family:Inter,Orbitron,ui-sans-serif,system-u
 <div class="sb-top">
 <div class="logo">AI</div>
 <div>
-<div class="sb-title">Wisnu Chat AI</div>By WIsnu Elitis</div>
+<div class="sb-title">Nitesh's ChatAI</div>
+<div class="small-muted">Owner: Nitesh Kumar 🤘</div>
 </div>
 <div class="sb-actions">
 <button class="icon-btn" id="newChatBtn" title="New chat">＋</button>
-<button class="icon-btn" id="clearAllBtn" title="Clear all">-</button>
+<button class="icon-btn" id="clearAllBtn" title="Clear all">🗑</button>
 </div>
 </div>
 <div class="search">
 <input id="searchChats" placeholder="Search chats...">
 </div>
 <div class="chats" id="chatsList"></div>
-<div class="footer-small"></div>
+<div class="footer-small">Futuristic AI frontend by Nitesh Kumar ✨</div>
 </div>
 <div class="chat-area">
 <div class="chat-top">
 <div class="chat-avatar" id="contactAvatar">AI</div>
 <div>
 <div class="chat-title" id="chatTitle">Welcome!</div>
-<div class="chat-status" id="chatStatus">Welcome to Wisnu Ai</div>
+<div class="chat-status" id="chatStatus">Say hi to your AI assistant 😎</div>
 </div>
 </div>
 <div class="messages" id="messages"></div>
@@ -122,7 +123,7 @@ let activeChatId = chats[0]?.id || null;
 
 // Initial greeting with compliment
 if(!activeChatId){
-  startNewChat("Data user 4445-4455");
+  startNewChat("Hello Nitesh Kumar! You are a genius! 😎🔥");
 }
 
 // ----------------- Storage -----------------
@@ -217,7 +218,7 @@ async function getGPTReply(userText, chatHistory){
 // ----------------- Events -----------------
 sendBtn.onclick=sendMessage;
 promptEl.addEventListener("keypress",e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); } });
-newChatBtn.onclick=()=>startNewChat("Hello, how are you today?");
+newChatBtn.onclick=()=>startNewChat("Hey Nitesh! Ready for another amazing chat? 😎");
 clearAllBtn.onclick=()=>{ chats=[]; saveChats(); renderChats(); renderMessages(); }
 searchChatsEl.addEventListener("input",()=>{
   const q=searchChatsEl.value.toLowerCase();
@@ -231,8 +232,6 @@ renderChats(); renderMessages();
 </script>
 </body>
 </html>
-
-
 
 
 
